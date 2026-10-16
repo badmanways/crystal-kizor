@@ -1,0 +1,20 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    background-color: #EFECE6;
+    color: #1C1B19;
+  }
+
+  body {
+    background-color: #EFECE6;
+    color: #1C1B19;
+    font-family: var(--font-instrument-sans), sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
