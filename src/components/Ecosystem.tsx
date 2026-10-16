@@ -125,7 +125,9 @@ function CompactEcosystemCard({
   card: EcosystemCardData;
   delay?: number;
 }) {
-  // Side-by-side portrait split when a compact card has an image (Speaking Engagements)
+  // Compact card with image (Speaking Engagements):
+  // - Mobile (< sm): matches Studio COKA / ELEvated vertical flow (Badge -> Title -> Copy -> Image -> Bottom-Right CTA)
+  // - Desktop (sm+): clean side-by-side split inside the 274px bento slot
   if (card.image) {
     return (
       <motion.article
@@ -134,7 +136,7 @@ function CompactEcosystemCard({
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-60px" }}
         transition={{ duration: 0.45, delay }}
-        className="flex-1 border border-[#BFB9AC] bg-[#EFECE6] p-[25px] min-h-[274px] flex flex-col sm:flex-row gap-5 items-stretch justify-between scroll-mt-24 hover:border-[#3F5243]/70 transition-colors"
+        className="lg:flex-1 border border-[#BFB9AC] bg-[#EFECE6] p-[25px] lg:min-h-[274px] flex flex-col sm:flex-row gap-5 items-stretch justify-between overflow-hidden scroll-mt-24 hover:border-[#3F5243]/70 transition-colors"
       >
         <div className="flex-1 flex flex-col justify-between min-w-0">
           <div>
@@ -147,16 +149,27 @@ function CompactEcosystemCard({
               )}
             </div>
 
-            <h3 className="mt-[14px] text-[26px] lg:text-[29px] leading-[1.18] font-normal tracking-[-0.02em] text-[#3F5243]">
+            <h3 className="mt-[14px] text-[28px] lg:text-[29px] leading-[1.18] font-normal tracking-[-0.02em] text-[#3F5243]">
               {card.title}
             </h3>
 
-            <p className="mt-[10px] text-[14.5px] leading-[1.6] font-normal text-[#605D57]">
+            <p className="mt-[10px] text-[15px] sm:text-[14.5px] leading-[1.62] font-normal text-[#605D57]">
               {card.description}
             </p>
+
+            {/* Mobile Image: sits cleanly between description and bottom-right CTA just like Studio COKA & ELEvated */}
+            <div className="sm:hidden mt-[16px] w-full h-[240px] overflow-hidden">
+              <SmartImage
+                src={card.image.src}
+                alt={card.image.alt}
+                fallbackLabel={card.title}
+                objectPosition={card.image.objectPosition || "center 18%"}
+                className="w-full h-full"
+              />
+            </div>
           </div>
 
-          <div className="mt-4 pt-1 flex justify-start">
+          <div className="mt-4 pt-1 flex justify-end sm:justify-start">
             <a
               href={card.href}
               className="group inline-flex items-center gap-1 text-[14px] font-medium tracking-[-0.01em] text-[#1C1B19] hover:text-[#3F5243] transition-colors"
@@ -167,8 +180,8 @@ function CompactEcosystemCard({
           </div>
         </div>
 
-        {/* Right Portrait Thumbnail — locked to card inner height so bento grid never distorts */}
-        <div className="w-full sm:w-[156px] lg:w-[164px] h-[220px] sm:h-auto shrink-0 overflow-hidden">
+        {/* Tablet/Desktop Portrait Thumbnail — locked inside card height */}
+        <div className="hidden sm:block sm:w-[156px] lg:w-[164px] sm:h-[222px] shrink-0 overflow-hidden self-center">
           <SmartImage
             src={card.image.src}
             alt={card.image.alt}
@@ -188,7 +201,7 @@ function CompactEcosystemCard({
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-60px" }}
       transition={{ duration: 0.45, delay }}
-      className="flex-1 border border-[#BFB9AC] bg-[#EFECE6] p-[25px] min-h-[274px] flex flex-col justify-between scroll-mt-24 hover:border-[#3F5243]/70 transition-colors"
+      className="lg:flex-1 border border-[#BFB9AC] bg-[#EFECE6] p-[25px] lg:min-h-[274px] flex flex-col justify-between scroll-mt-24 hover:border-[#3F5243]/70 transition-colors"
     >
       <div>
         <div className="flex items-center justify-between gap-2">
@@ -209,7 +222,7 @@ function CompactEcosystemCard({
         </p>
       </div>
 
-      <div className="mt-6 flex justify-end">
+      <div className="mt-5 lg:mt-6 flex justify-end">
         <a
           href={card.href}
           className="group inline-flex items-center gap-1 text-[14px] font-medium tracking-[-0.01em] text-[#1C1B19] hover:text-[#3F5243] transition-colors"
@@ -277,7 +290,7 @@ export default function Ecosystem() {
 
               {/* Studio COKA Interactive Image Slideshow */}
               {studioSlides.length > 0 && (
-                <div className="mt-[16px] w-full h-[240px] sm:h-[300px] lg:h-[337px] flex-1">
+                <div className="mt-[16px] w-full h-[240px] sm:h-[300px] lg:h-[337px] lg:flex-1">
                   <CardImageSlideshow
                     slides={studioSlides}
                     fallbackLabel="Studio COKA Architecture"
@@ -299,7 +312,7 @@ export default function Ecosystem() {
           </motion.article>
 
           {/* Right Stacked Column: Speaking Engagements + TEA */}
-          <div className="flex flex-col gap-[20px] h-full">
+          <div className="flex flex-col gap-[20px] lg:h-full">
             <CompactEcosystemCard card={speaking} delay={0.08} />
             <CompactEcosystemCard card={tea} delay={0.14} />
           </div>
@@ -308,7 +321,7 @@ export default function Ecosystem() {
         {/* BOTTOM BENTO ROW: Stacked AKO Alliance & Alive and Free (413px) + ELEvated (847px) */}
         <div className="mt-[20px] grid grid-cols-1 lg:grid-cols-[413fr_847fr] gap-[20px] items-stretch">
           {/* Left Stacked Column: AKO Alliance + Alive and Free */}
-          <div className="flex flex-col gap-[20px] h-full">
+          <div className="flex flex-col gap-[20px] lg:h-full">
             <CompactEcosystemCard card={akoAlliance} delay={0.05} />
             <CompactEcosystemCard card={aliveAndFree} delay={0.12} />
           </div>
@@ -342,7 +355,7 @@ export default function Ecosystem() {
 
               {/* ELEvated Interactive Image Slideshow */}
               {elevatedSlides.length > 0 && (
-                <div className="mt-[18px] w-full h-[240px] sm:h-[300px] lg:h-[333px] flex-1">
+                <div className="mt-[18px] w-full h-[240px] sm:h-[300px] lg:h-[333px] lg:flex-1">
                   <CardImageSlideshow
                     slides={elevatedSlides}
                     fallbackLabel="ELEvated African Craft"
