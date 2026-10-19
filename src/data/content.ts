@@ -89,7 +89,7 @@ export const siteContent = {
     links: [
       { label: "MY PHILOSOPHY", href: "#my-philosophy" },
       { label: "THE ECOSYSTEM", href: "#the-ecosystem" },
-      { label: "RESEARCH & MEDIA", href: "#research-media" },
+      { label: "RESEARCH & WRITINGS", href: "#research-media" },
     ] as NavItem[],
     cta: {
       label: "START HERE",
@@ -298,7 +298,7 @@ export const siteContent = {
   },
 
   researchMedia: {
-    eyebrow: "RESEARCH & MEDIA",
+    eyebrow: "RESEARCH & WRITINGS",
     heading: "Selected Research, Guides & Essays",
     archiveLink: {
       label: "Read Full Archive",
